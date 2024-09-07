@@ -1,4 +1,5 @@
 import React from "react";
+import "../styles/LandingPage.css";
 import { useNavigate } from "react-router-dom";
 
 function LandingPage() {
@@ -9,8 +10,11 @@ function LandingPage() {
   };
 
   return (
-    <div>
-      <div>
+    <div className="landing-page">
+      <header className="header">
+        <div className="logo">Battle Bites</div>
+      </header>
+      <div className="content">
         <h1>Welcome to Battle Bites</h1>
         <p>
           Find out how healthy and unhealthy foods compare based on nutritional

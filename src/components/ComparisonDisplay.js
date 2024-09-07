@@ -1,7 +1,12 @@
 import React from "react";
 
-function comparisonDisplay() {
-  return <div>comparisonDisplay</div>;
+function ComparisonDisplay() {
+  return (
+    <div>
+      <div>Food 1 here</div>
+      <div>Food 2 here</div>
+    </div>
+  );
 }
 
-export default comparisonDisplay;
+export default ComparisonDisplay;
