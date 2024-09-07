@@ -1,5 +1,6 @@
 import React from "react";
 import "../styles/LandingPage.css";
+import Header from "../components/Header";
 import { useNavigate } from "react-router-dom";
 
 function LandingPage() {
@@ -11,9 +12,10 @@ function LandingPage() {
 
   return (
     <div className="landing-page">
-      <header className="header">
+      {/* <header className="header">
         <div className="logo">Battle Bites</div>
-      </header>
+      </header> */}
+      <Header />
       <div className="content">
         <h1>Welcome to Battle Bites</h1>
         <p>

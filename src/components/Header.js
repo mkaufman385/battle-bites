@@ -1,7 +1,12 @@
 import React from "react";
+import "../styles/Header.css";
 
 function Header() {
-  return <div>Header</div>;
+  return (
+    <header className="header">
+      <div className="logo">Battle Bites</div>
+    </header>
+  );
 }
 
 export default Header;
