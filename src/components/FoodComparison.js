@@ -1,7 +1,7 @@
 import React from "react";
 
-function foodComparison() {
-  return <div>foodComparison</div>;
+function FoodComparison() {
+  return <div>Compare 2 foods here</div>;
 }
 
-export default foodComparison;
+export default FoodComparison;

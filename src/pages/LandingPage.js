@@ -1,6 +1,13 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 function LandingPage() {
+  const navigate = useNavigate();
+
+  const handleButtonClick = () => {
+    navigate("/compare");
+  };
+
   return (
     <div>
       <div>
@@ -9,7 +16,7 @@ function LandingPage() {
           Find out how healthy and unhealthy foods compare based on nutritional
           information.
         </p>
-        <button>Compare Foods NOW</button>
+        <button onClick={handleButtonClick}>Compare Foods NOW</button>
       </div>
     </div>
   );
