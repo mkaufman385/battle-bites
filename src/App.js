@@ -1,14 +1,14 @@
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
-import Navbar from "./components/Navbar";
+import Header from "./components/Header";
 import Footer from "./components/Footer";
 
 function App() {
   return (
     <div className="App">
       <Router>
-        <Navbar />
+        <Header />
         <Routes>
           <Route path="/" element={<LandingPage />} />
         </Routes>
