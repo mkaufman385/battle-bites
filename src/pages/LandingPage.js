@@ -12,9 +12,6 @@ function LandingPage() {
 
   return (
     <div className="landing-page">
-      {/* <header className="header">
-        <div className="logo">Battle Bites</div>
-      </header> */}
       <Header />
       <div className="content">
         <h1>Welcome to Battle Bites</h1>
@@ -22,7 +19,9 @@ function LandingPage() {
           Find out how healthy and unhealthy foods compare based on nutritional
           information.
         </p>
-        <button onClick={handleButtonClick}>Compare Foods NOW</button>
+        <button className="compare-foods-button" onClick={handleButtonClick}>
+          Compare Foods NOW
+        </button>
       </div>
     </div>
   );
