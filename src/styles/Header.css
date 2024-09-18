@@ -3,13 +3,18 @@
   top: 0;
   left: 0;
   width: 100%;
-  padding: 20px;
+  padding: 5px;
   background-color: #f8f9fa;
 }
 
-button {
+/* .header-button {
   font-size: 24px;
   font-weight: bold;
   color: #333;
   margin-left: 20px;
+} */
+
+.battle-bites-logo {
+  height: 120px;
+  width: 212px;
 }

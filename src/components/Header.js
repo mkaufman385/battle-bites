@@ -1,6 +1,7 @@
 import React from "react";
 import "../styles/Header.css";
 import { useNavigate } from "react-router-dom";
+import BattleBitesLogo from "../images/Battle-Bites-Logo.png";
 
 function Header() {
   const navigate = useNavigate();
@@ -11,10 +12,17 @@ function Header() {
 
   return (
     <header className="header">
-      <div>
-        <button className="logo" onClick={handleButtonClick}>
-          Battle Bites
-        </button>
+      <div
+        onClick={handleButtonClick}
+        className="logo-container"
+        role="button"
+        aria-label="Landingpage"
+      >
+        <img
+          className="battle-bites-logo"
+          src={BattleBitesLogo}
+          alt="battle bites logo"
+        />
       </div>
     </header>
   );
