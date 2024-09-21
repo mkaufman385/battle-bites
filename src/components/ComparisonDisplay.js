@@ -1,4 +1,5 @@
 import React from "react";
+// import FoodComparison from "./FoodComparison";
 
 function ComparisonDisplay() {
   return (
