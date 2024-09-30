@@ -1,7 +1,7 @@
 .landing-page {
   position: relative;
   text-align: center;
-  padding-top: 50px;
+  /* padding-top: 50px; */
 }
 
 .content {
@@ -18,15 +18,17 @@
 }
 
 .compare-foods-button {
-  padding: 10px 20px;
-  font-size: 16px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+  display: inline-block; /* Makes it behave like a button */
+  padding: 10px 30px; /* Add padding for a button-like appearance */
+  background-color: #007bff; /* Button background color */
+  color: white; /* Text color */
+  text-decoration: none; /* Remove underline */
+  border-radius: 5px; /* Rounded corners */
+  border: none; /* Remove any borders */
+  cursor: pointer; /* Change cursor to pointer on hover */
+  text-align: center; /* Center the text */
 }
 
-.compare-foods-button button:hover {
-  background-color: #0056b3;
+.compare-foods-button:hover {
+  background-color: #0056b3; /* Darken the background on hover */
 }

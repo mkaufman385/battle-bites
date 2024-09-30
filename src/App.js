@@ -4,6 +4,7 @@ import LandingPage from "./pages/LandingPage";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import FoodComparison from "./components/FoodComparison";
+// import ComparisonDisplay from "./components/ComparisonDisplay";
 
 function App() {
   return (

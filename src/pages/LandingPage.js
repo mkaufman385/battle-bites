@@ -1,18 +1,12 @@
 import React from "react";
 import "../styles/LandingPage.css";
-import Header from "../components/Header";
-import { useNavigate } from "react-router-dom";
+// import Header from "../components/Header";
+import { Link } from "react-router-dom"; // Import Link
 
 function LandingPage() {
-  const navigate = useNavigate();
-
-  const handleButtonClick = () => {
-    navigate("/compare");
-  };
-
   return (
     <div className="landing-page">
-      <Header />
+      {/* <Header /> */}
       <div className="content">
         <div className="welcome">
           <h1>Welcome to Battle Bites</h1>
@@ -39,9 +33,11 @@ function LandingPage() {
           Find out how whole foods and processed foods compare based on
           nutritional information.
         </h2>
-        <button className="compare-foods-button" onClick={handleButtonClick}>
+
+        {/* Style the Link like a button */}
+        <Link to="/compare" className="compare-foods-button">
           Compare Foods NOW
-        </button>
+        </Link>
       </div>
     </div>
   );

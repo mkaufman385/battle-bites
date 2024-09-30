@@ -1,8 +1,17 @@
-.footer {
+/* .footer {
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
   padding: 5px;
   background-color: #f8f9fa;
+} */
+
+.footer {
+  background-color: #f8f9fa; /* Example background color */
+  color: #f8f9fa; /* Light text color */
+  text-align: center; /* Center align text */
+  padding: 20px; /* Add padding for spacing */
+  position: relative; /* Change to relative */
+  width: 100%; /* Full width */
 }

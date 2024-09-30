@@ -1,0 +1,35 @@
+.food-comparison {
+  padding-top: 80px; /* Adjust this value based on your header height */
+}
+
+.comparison-container {
+  display: flex; /* Use flexbox for layout */
+  justify-content: space-around; /* Space items evenly */
+  margin: 20px; /* Add margin for spacing */
+}
+
+.food-box {
+  border: 2px solid #ccc; /* Light gray border */
+  border-radius: 8px; /* Rounded corners */
+  padding: 20px; /* Padding inside the box */
+  width: 200px; /* Fixed width for boxes */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.healthy {
+  background-color: #d4edda; /* Light green background */
+}
+
+.unhealthy {
+  background-color: #f8d7da; /* Light red background */
+}
+
+h3 {
+  text-align: center; /* Center align the titles */
+  color: #333; /* Darker text color */
+}
+
+h4 {
+  text-align: center; /* Center align the food names */
+  color: #555; /* Grayish text color */
+}
