@@ -1,11 +1,10 @@
 .landing-page {
   position: relative;
   text-align: center;
-  /* padding-top: 50px; */
 }
 
 .content {
-  margin-top: 100px;
+  margin-top: 50px;
 }
 
 .food-type-description {

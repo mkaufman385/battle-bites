@@ -9,7 +9,8 @@
 
 .footer {
   background-color: #f8f9fa; /* Example background color */
-  color: #f8f9fa; /* Light text color */
+  margin-top: 50px;
+  color: black; /* Light text color */
   text-align: center; /* Center align text */
   padding: 20px; /* Add padding for spacing */
   position: relative; /* Change to relative */
