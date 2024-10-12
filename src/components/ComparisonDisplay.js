@@ -55,7 +55,7 @@ import "../styles/ComparisonDisplay.css";
 const ComparisonDisplay = ({ foodData }) => {
   // Check if food data is available
   if (!foodData) {
-    return <p>Press the button to compare foods.</p>;
+    return <p>Press the button to compare foods</p>;
   }
 
   // Extract food1 and food2 from the API data (adjust this based on your API response structure)
