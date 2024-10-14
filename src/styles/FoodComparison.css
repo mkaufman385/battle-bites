@@ -1,0 +1,11 @@
+.compare-foods-button {
+  display: inline-block; /* Makes it behave like a button */
+  padding: 10px 30px; /* Add padding for a button-like appearance */
+  background-color: #007bff; /* Button background color */
+  color: white; /* Text color */
+  text-decoration: none; /* Remove underline */
+  border-radius: 5px; /* Rounded corners */
+  border: none; /* Remove any borders */
+  cursor: pointer; /* Change cursor to pointer on hover */
+  text-align: center; /* Center the text */
+}

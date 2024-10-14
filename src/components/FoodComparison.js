@@ -39,7 +39,7 @@ function FoodComparison() {
       });
       setFoodData(response.data); // Store API data
     } catch (error) {
-      setError("Error fetching data");
+      setError("Error gathering food data");
       console.error("Error fetching data", error);
     } finally {
       setLoading(false); // Stop loading
@@ -49,7 +49,9 @@ function FoodComparison() {
   return (
     <div>
       <h2>Compare Your Foods</h2>
-      <button onClick={fetchFoodComparison}>Compare Foods</button>{" "}
+      <button className="compare-foods-button" onClick={fetchFoodComparison}>
+        Compare Foods
+      </button>{" "}
       {/* Button to trigger API */}
       {/* Conditional rendering for loading, error, and data */}
       {loading && <p>Loading...</p>}
