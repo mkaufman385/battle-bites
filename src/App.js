@@ -11,10 +11,12 @@ function App() {
     <div className="App">
       <Router>
         <Header />
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/compare" element={<FoodComparison />} />
-        </Routes>
+        <main>
+          <Routes>
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/compare" element={<FoodComparison />} />
+          </Routes>
+        </main>
         <Footer />
       </Router>
     </div>
