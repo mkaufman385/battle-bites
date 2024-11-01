@@ -1,28 +1,10 @@
-// import React from "react";
-// import ComparisonDisplay from "./ComparisonDisplay";
-
-// function FoodComparison() {
-//   return (
-//     // <div>
-//     //   <div>Food 1 here</div>
-//     //   <div>Food 2 here</div>
-//     // </div>
-
-//     <div>
-//       <h2>Compare Your Foods</h2>
-//       <div>{<ComparisonDisplay />} </div>
-//     </div>
-//   );
-// }
-
-// export default FoodComparison;
-
 import React, { useState } from "react";
 import ComparisonDisplay from "./ComparisonDisplay";
 import axios from "axios";
 
 function FoodComparison() {
   const [foodData, setFoodData] = useState(null);
+  // const [isComparing, setIsComparing] = useState(false); // Track button click
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const API_KEY = process.env.REACT_APP_API_KEY;
@@ -30,6 +12,7 @@ function FoodComparison() {
   const fetchFoodComparison = async () => {
     setLoading(true); // Show loading state
     setError(null); // Reset any previous errors
+    // setIsComparing(true);
     try {
       const response = await axios.get("https://api-endpoint-here", {
         headers: {
@@ -57,9 +40,50 @@ function FoodComparison() {
       {loading && <p>Loading...</p>}
       {error && <p>{error}</p>}
       {/* Pass foodData to ComparisonDisplay to display the results */}
-      <ComparisonDisplay foodData={foodData} />
+      <ComparisonDisplay
+        foodData={foodData}
+        // isComparing={isComparing}
+      />
     </div>
   );
 }
 
 export default FoodComparison;
+
+// ---------------------------------------------------------------------------------------------------------------------------
+
+// import React, { useState } from "react";
+// import ComparisonDisplay from "./ComparisonDisplay";
+// import "../styles/FoodComparison.css";
+
+// function FoodComparison() {
+//   const [foodData, setFoodData] = useState(null);
+//   const [isComparing, setIsComparing] = useState(false); // Track button click
+
+//   const fetchFoodData = async () => {
+//     setIsComparing(true); // Set to true when the button is pressed
+
+//     try {
+//       const response = await fetch("https://api-endpoint-here", {
+//         headers: {
+//           "x-api-key": process.env.REACT_APP_API_KEY,
+//           "x-api-host": "api-host-here",
+//         },
+//       });
+
+//       const data = await response.json();
+//       setFoodData(data);
+//     } catch (error) {
+//       console.error("Error fetching food data:", error);
+//     }
+//   };
+
+//   return (
+//     <div className="food-comparison">
+//       <button onClick={fetchFoodData}>Compare Foods</button>
+//       <ComparisonDisplay foodData={foodData} isComparing={isComparing} />
+//     </div>
+//   );
+// }
+
+// export default FoodComparison;
