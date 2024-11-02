@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import ComparisonDisplay from "./ComparisonDisplay";
+import Spinner from "./Spinner";
 import axios from "axios";
 
 function FoodComparison() {
   const [foodData, setFoodData] = useState(null);
-  // const [isComparing, setIsComparing] = useState(false); // Track button click
+  const [isComparing, setIsComparing] = useState(false); // Track button click
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const API_KEY = process.env.REACT_APP_API_KEY;
@@ -12,7 +13,7 @@ function FoodComparison() {
   const fetchFoodComparison = async () => {
     setLoading(true); // Show loading state
     setError(null); // Reset any previous errors
-    // setIsComparing(true);
+    setIsComparing(true);
     try {
       const response = await axios.get("https://api-endpoint-here", {
         headers: {
@@ -34,16 +35,19 @@ function FoodComparison() {
       <h2>Compare Your Foods</h2>
       <button className="compare-foods-button" onClick={fetchFoodComparison}>
         Compare Foods
-      </button>{" "}
-      {/* Button to trigger API */}
+      </button>
+
       {/* Conditional rendering for loading, error, and data */}
-      {loading && <p>Loading...</p>}
+      {loading && <Spinner />}
       {error && <p>{error}</p>}
+
+      {/* This message will go away when the button is pressed */}
+      {/* {!foodData && !isComparing && (
+        <p>Press the button to start comparing foods</p>
+      )} */}
+
       {/* Pass foodData to ComparisonDisplay to display the results */}
-      <ComparisonDisplay
-        foodData={foodData}
-        // isComparing={isComparing}
-      />
+      <ComparisonDisplay foodData={foodData} isComparing={isComparing} />
     </div>
   );
 }

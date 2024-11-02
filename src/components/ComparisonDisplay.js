@@ -7,22 +7,15 @@ const ComparisonDisplay = ({ foodData, isComparing }) => {
     return <p>Press the button to start comparing foods</p>;
   }
 
-  // Extract food1 and food2 from the API data (adjust this based on your API response structure)
-  const food1 = foodData.healthyFood || {
-    name: "Apple",
-    calories: 95,
-    protein: 0.5,
-    carbs: 25,
-    fat: 0.3,
-  };
+  // Check if foodData has the expected structure
+  if (!foodData || !foodData.healthyFood || !foodData.unhealthyFood) {
+    return <p>No valid food data available</p>; // Show a message if data is not valid
+  }
 
-  const food2 = foodData.unhealthyFood || {
-    name: "Oreos",
-    calories: 53,
-    protein: 0.5,
-    carbs: 8.3,
-    fat: 2.3,
-  };
+  // Extract food1 and food2 from the API data (adjust this based on your API response structure)
+  const food1 = foodData.healthyFood;
+
+  const food2 = foodData.unhealthyFood;
 
   return (
     <div className="comparison-container">
