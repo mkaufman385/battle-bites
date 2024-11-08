@@ -8,27 +8,81 @@ function FoodComparison() {
   const [isComparing, setIsComparing] = useState(false); // Track button click
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const API_KEY = process.env.REACT_APP_API_KEY;
+
+  // const API_KEY = process.env.REACT_APP_API_KEY;
+
+  const fetchAccessToken = async () => {
+    const clientId = process.env.REACT_APP_FATSECRET_CLIENT_ID;
+    const clientSecret = process.env.REACT_APP_FATSECRET_CLIENT_SECRET;
+    const url = "https://oauth.fatsecret.com/connect/token";
+
+    try {
+      const response = await axios.post(
+        url,
+        new URLSearchParams({
+          grant_type: "client_credentials",
+          scope: "basic",
+        }),
+        {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            Authorization: `Basic ${btoa(`${clientId}:${clientSecret}`)}`,
+          },
+        }
+      );
+      return response.data.access_token;
+    } catch (error) {
+      console.error("Error fetching access token", error);
+      setError("Unable to authenticate with FatSecret API");
+      return null;
+    }
+  };
 
   const fetchFoodComparison = async () => {
-    setLoading(true); // Show loading state
-    setError(null); // Reset any previous errors
+    setLoading(true);
+    setError(null);
     setIsComparing(true);
+
+    const accessToken = await fetchAccessToken();
+    if (!accessToken) return; // Stop if token couldn't be fetched
+
     try {
-      const response = await axios.get("https://api-endpoint-here", {
-        headers: {
-          "X-RapidAPI-Key": API_KEY,
-          "X-RapidAPI-Host": "api-host-here",
-        },
-      });
+      const response = await axios.get(
+        "https://platform.fatsecret.com/rest/server.api?method=foods.search&search_expression=apple&format=json",
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
       setFoodData(response.data); // Store API data
     } catch (error) {
       setError("Error gathering food data");
       console.error("Error fetching data", error);
     } finally {
-      setLoading(false); // Stop loading
+      setLoading(false);
     }
   };
+
+  // const fetchFoodComparison = async () => {
+  //   setLoading(true); // Show loading state
+  //   setError(null); // Reset any previous errors
+  //   setIsComparing(true);
+  //   try {
+  //     const response = await axios.get("https://api-endpoint-here", {
+  //       headers: {
+  //         "X-RapidAPI-Key": API_KEY,
+  //         "X-RapidAPI-Host": "api-host-here",
+  //       },
+  //     });
+  //     setFoodData(response.data); // Store API data
+  //   } catch (error) {
+  //     setError("Error gathering food data");
+  //     console.error("Error fetching data", error);
+  //   } finally {
+  //     setLoading(false); // Stop loading
+  //   }
+  // };
 
   return (
     <div>
