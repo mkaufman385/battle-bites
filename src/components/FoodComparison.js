@@ -1,3 +1,141 @@
+import React, { useEffect, useState } from "react";
+import axios from "axios"; // Import axios
+import ComparisonDisplay from "../components/ComparisonDisplay";
+import "../styles/FoodComparison.css";
+
+function FoodComparison() {
+  const [foodData, setFoodData] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const fetchAccessToken = async () => {
+    const clientId = process.env.REACT_APP_FATSECRET_CLIENT_ID;
+    const clientSecret = process.env.REACT_APP_FATSECRET_CLIENT_SECRET;
+    const url = "https://oauth.fatsecret.com/connect/token";
+
+    try {
+      const response = await axios.post(
+        url,
+        new URLSearchParams({
+          grant_type: "client_credentials",
+          scope: "basic",
+        }),
+        {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            Authorization: `Basic ${btoa(`${clientId}:${clientSecret}`)}`,
+          },
+        }
+      );
+      return response.data.access_token;
+    } catch (error) {
+      console.error("Error fetching access token", error);
+      return null;
+    }
+  };
+
+  const apiUrl = "https://platform.fatsecret.com/rest/server.api";
+
+  const fetchFood = async (foodName) => {
+    try {
+      const accessToken = await fetchAccessToken();
+      if (!accessToken) {
+        throw new Error("Unable to fetch access token");
+      }
+
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+        body: JSON.stringify({
+          method: "foods.search",
+          search_expression: foodName,
+          max_results: 1,
+          format: "json",
+        }),
+      });
+
+      const data = await response.json();
+      return data?.foods?.food[0];
+    } catch (error) {
+      console.error(`Error fetching food: ${foodName}`, error);
+      return null;
+    }
+  };
+
+  const formatFoodData = (healthy, unhealthy) => ({
+    healthyFood: {
+      food_name: healthy?.food_name || "Unknown",
+      calories: healthy?.nutritional_values?.calories || 0,
+      protein: healthy?.nutritional_values?.protein || 0,
+      carbs: healthy?.nutritional_values?.carbohydrate || 0,
+      fat: healthy?.nutritional_values?.fat || 0,
+    },
+    unhealthyFood: {
+      food_name: unhealthy?.food_name || "Unknown",
+      calories: unhealthy?.nutritional_values?.calories || 0,
+      protein: unhealthy?.nutritional_values?.protein || 0,
+      carbs: unhealthy?.nutritional_values?.carbohydrate || 0,
+      fat: unhealthy?.nutritional_values?.fat || 0,
+    },
+  });
+
+  useEffect(() => {
+    const fetchExampleFoods = async () => {
+      setIsLoading(true);
+      try {
+        const healthyFood = await fetchFood("apple");
+        const unhealthyFood = await fetchFood("potato chips");
+        setFoodData(formatFoodData(healthyFood, unhealthyFood));
+      } catch (error) {
+        console.error("Error fetching example foods:", error);
+        setFoodData(null);
+      }
+      setIsLoading(false);
+    };
+
+    fetchExampleFoods();
+  }, []);
+
+  const handleCompareFoods = async () => {
+    setIsLoading(true);
+    const healthyOptions = ["broccoli", "banana", "spinach", "salmon"];
+    const unhealthyOptions = ["pizza", "burger", "fries", "soda"];
+
+    const randomHealthy =
+      healthyOptions[Math.floor(Math.random() * healthyOptions.length)];
+    const randomUnhealthy =
+      unhealthyOptions[Math.floor(Math.random() * unhealthyOptions.length)];
+
+    const healthyFood = await fetchFood(randomHealthy);
+    const unhealthyFood = await fetchFood(randomUnhealthy);
+
+    setFoodData(formatFoodData(healthyFood, unhealthyFood));
+    setIsLoading(false);
+  };
+
+  return (
+    <div className="food-comparison-page">
+      <h1>Food Comparison</h1>
+      {isLoading ? (
+        <p>Loading...</p>
+      ) : foodData ? (
+        <ComparisonDisplay foodData={foodData} />
+      ) : (
+        <p>No data available</p>
+      )}
+      <button onClick={handleCompareFoods} className="compare-button">
+        Compare Foods
+      </button>
+    </div>
+  );
+}
+
+export default FoodComparison;
+
+// -----------------------------------------------------------------------------
+
 // import axios from "axios";
 // import React, { useState } from "react";
 // import ComparisonDisplay from "./ComparisonDisplay";
@@ -8,7 +146,9 @@
 //   const [isComparing, setIsComparing] = useState(false);
 //   const [loading, setLoading] = useState(false);
 //   const [error, setError] = useState(null);
+//   const [foodSearch, setFoodSearch] = useState("apple"); // Search term for the foods
 
+//   // Fetch the access token needed for API authentication
 //   const fetchAccessToken = async () => {
 //     const clientId = process.env.REACT_APP_FATSECRET_CLIENT_ID;
 //     const clientSecret = process.env.REACT_APP_FATSECRET_CLIENT_SECRET;
@@ -36,36 +176,31 @@
 //     }
 //   };
 
+//   // Function to fetch food comparison data
 //   const fetchFoodComparison = async () => {
-//     const [foodData, setFoodData] = useState(null); // Stores the food data
-//     const [error, setError] = useState(null); // Stores any errors encountered
-//     const [foodSearch, setFoodSearch] = useState("apple"); // Search term for the foods
+//     setLoading(true);
+//     setError(null);
+//     setIsComparing(true);
+
+//     const accessToken = await fetchAccessToken();
+//     if (!accessToken) return;
+
 //     try {
-//       // Update the URL to match the correct API endpoint
-//       const url = `https://platform.fatsecret.com/rest/server.api?method=foods.search&search_expression=${encodeURIComponent(
+//       // Construct the correct URL with the proxy path
+//       const url = `/rest/server.api?method=foods.search&search_expression=${encodeURIComponent(
 //         foodSearch
 //       )}&format=json`;
 
-//       // Make the fetch call with proper authentication headers (use OAuth token if needed)
-//       const response = await fetch(url, {
-//         method: "GET",
+//       const response = await axios.get(url, {
 //         headers: {
-//           Authorization: `Bearer ${access_token}`, // Add your access token here
+//           Authorization: `Bearer ${accessToken}`,
 //         },
 //       });
 
-//       // Check if the response is successful
-//       if (!response.ok) {
-//         throw new Error("Failed to fetch food data");
-//       }
-
-//       // Parse the response data as JSON
-//       const data = await response.json();
-
-//       // Ensure there is valid data
-//       if (data?.foods?.food?.length >= 2) {
-//         const healthyFood = data.foods.food[0]; // Assuming the first item is healthy
-//         const unhealthyFood = data.foods.food[1]; // Assuming the second item is unhealthy
+//       // Ensure the response data structure is valid
+//       if (response.data?.foods?.food?.length >= 2) {
+//         const healthyFood = response.data.foods.food[0]; // Assuming the first item is healthy
+//         const unhealthyFood = response.data.foods.food[1]; // Assuming the second item is unhealthy
 
 //         // Update the state with the food data
 //         setFoodData({ healthyFood, unhealthyFood });
@@ -73,17 +208,22 @@
 //         throw new Error("Not enough food data for comparison");
 //       }
 //     } catch (error) {
-//       // Log and display any errors
 //       console.error("Error fetching data:", error);
-//       setError(error.message); // Set an error state to display error message
+//       setError(error.message); // Display error message
+//     } finally {
+//       setLoading(false);
 //     }
 //   };
 
 //   return (
 //     <div>
-//       <button onClick={fetchFoodComparison}>Compare Foods</button>
+//       <button className="compare-foods-button" onClick={fetchFoodComparison}>
+//         Compare Foods
+//       </button>
 
 //       {error && <p style={{ color: "red" }}>Error: {error}</p>}
+
+//       {loading && <Spinner />}
 
 //       {foodData ? (
 //         <ComparisonDisplay foodData={foodData} />
@@ -95,103 +235,3 @@
 // }
 
 // export default FoodComparison;
-
-// -----------------------------------------------------------------------------
-
-import axios from "axios";
-import React, { useState } from "react";
-import ComparisonDisplay from "./ComparisonDisplay";
-import Spinner from "./Spinner";
-
-function FoodComparison() {
-  const [foodData, setFoodData] = useState(null);
-  const [isComparing, setIsComparing] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [foodSearch, setFoodSearch] = useState("apple"); // Search term for the foods
-
-  // Fetch the access token needed for API authentication
-  const fetchAccessToken = async () => {
-    const clientId = process.env.REACT_APP_FATSECRET_CLIENT_ID;
-    const clientSecret = process.env.REACT_APP_FATSECRET_CLIENT_SECRET;
-    const url = "/connect/token";
-
-    try {
-      const response = await axios.post(
-        url,
-        new URLSearchParams({
-          grant_type: "client_credentials",
-          scope: "basic",
-        }),
-        {
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-            Authorization: `Basic ${btoa(`${clientId}:${clientSecret}`)}`,
-          },
-        }
-      );
-      return response.data.access_token;
-    } catch (error) {
-      console.error("Error fetching access token", error);
-      setError("Unable to authenticate with FatSecret API");
-      return null;
-    }
-  };
-
-  // Function to fetch food comparison data
-  const fetchFoodComparison = async () => {
-    setLoading(true);
-    setError(null);
-    setIsComparing(true);
-
-    const accessToken = await fetchAccessToken();
-    if (!accessToken) return;
-
-    try {
-      // Construct the correct URL with the proxy path
-      const url = `/rest/server.api?method=foods.search&search_expression=${encodeURIComponent(
-        foodSearch
-      )}&format=json`;
-
-      const response = await axios.get(url, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-
-      // Ensure the response data structure is valid
-      if (response.data?.foods?.food?.length >= 2) {
-        const healthyFood = response.data.foods.food[0]; // Assuming the first item is healthy
-        const unhealthyFood = response.data.foods.food[1]; // Assuming the second item is unhealthy
-
-        // Update the state with the food data
-        setFoodData({ healthyFood, unhealthyFood });
-      } else {
-        throw new Error("Not enough food data for comparison");
-      }
-    } catch (error) {
-      console.error("Error fetching data:", error);
-      setError(error.message); // Display error message
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  return (
-    <div>
-      <button onClick={fetchFoodComparison}>Compare Foods</button>
-
-      {error && <p style={{ color: "red" }}>Error: {error}</p>}
-
-      {loading && <Spinner />}
-
-      {foodData ? (
-        <ComparisonDisplay foodData={foodData} />
-      ) : (
-        <p>Press the button to compare foods</p>
-      )}
-    </div>
-  );
-}
-
-export default FoodComparison;
