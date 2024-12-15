@@ -8,6 +8,7 @@ module.exports = function (app) {
       target: "https://oauth.fatsecret.com",
       changeOrigin: true,
       secure: false,
+      logLevel: "debug",
     })
   );
 
@@ -18,32 +19,9 @@ module.exports = function (app) {
       target: "https://platform.fatsecret.com",
       changeOrigin: true,
       secure: false,
+      logLevel: "debug",
     })
   );
 };
 
 // ------------------------------------------------------------------------------
-
-// const proxy = require("http-proxy-middleware");
-
-// module.exports = function (app) {
-//   // Proxy for token request
-//   app.use(
-//     "/connect",
-//     proxy({
-//       target: "https://oauth.fatsecret.com",
-//       changeOrigin: true,
-//       secure: false,
-//     })
-//   );
-
-//   // Proxy for food data request
-//   app.use(
-//     "/rest",
-//     proxy({
-//       target: "https://platform.fatsecret.com",
-//       changeOrigin: true,
-//       secure: false,
-//     })
-//   );
-// };

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios"; // Import axios
 import ComparisonDisplay from "../components/ComparisonDisplay";
 import "../styles/FoodComparison.css";
@@ -35,7 +35,7 @@ function FoodComparison() {
 
   const apiUrl = "https://platform.fatsecret.com/rest/server.api";
 
-  const fetchFood = async (foodName) => {
+  const fetchFood = useCallback(async (foodName) => {
     try {
       const accessToken = await fetchAccessToken();
       if (!accessToken) {
@@ -62,7 +62,7 @@ function FoodComparison() {
       console.error(`Error fetching food: ${foodName}`, error);
       return null;
     }
-  };
+  }, []);
 
   const formatFoodData = (healthy, unhealthy) => ({
     healthyFood: {
@@ -96,7 +96,7 @@ function FoodComparison() {
     };
 
     fetchExampleFoods();
-  }, []);
+  }, [fetchFood]);
 
   const handleCompareFoods = async () => {
     setIsLoading(true);
