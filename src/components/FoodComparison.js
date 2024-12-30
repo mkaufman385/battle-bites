@@ -11,6 +11,11 @@ function FoodComparison() {
     const clientId = process.env.REACT_APP_FATSECRET_CLIENT_ID;
     const clientSecret = process.env.REACT_APP_FATSECRET_CLIENT_SECRET;
     // const url = "https://oauth.fatsecret.com/connect/token";
+
+    // Verify environment variables
+    console.log("Client ID:", clientId);
+    console.log("Client Secret:", clientSecret);
+
     const url = "/connect/token"; // Using the proxy path for token request
 
     try {
