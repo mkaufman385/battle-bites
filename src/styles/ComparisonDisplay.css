@@ -17,11 +17,11 @@
 }
 
 .healthy {
-  background-color: #d4edda; /* Light green background */
+  background-color: #1cac78; /* Light green background */
 }
 
 .unhealthy {
-  background-color: #f8d7da; /* Light red background */
+  background-color: #ce2029; /* Light red background */
 }
 
 h3 {
