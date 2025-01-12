@@ -27,7 +27,11 @@
 
 h3 {
   text-align: center; /* Center align the titles */
-  color: #333; /* Darker text color */
+  color: #333;
+  text-shadow: -1px -1px 0 white,
+    /* Top-left shadow (border) */ 1px -1px 0 white,
+    /* Top-right shadow (border) */ -1px 1px 0 white,
+    /* Bottom-left shadow (border) */ 1px 1px 0 white; /* Bottom-right shadow (border) */
 }
 
 h4 {
