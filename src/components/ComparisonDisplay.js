@@ -1,5 +1,3 @@
-// ----------------------------------------------------------------------------------
-
 import React from "react";
 import "../styles/ComparisonDisplay.css";
 
@@ -12,28 +10,68 @@ const ComparisonDisplay = ({ foodData }) => {
       <div className="food-box healthy">
         <h3>Healthy Food</h3>
         <h4>{healthyFood?.food_name || "N/A"}</h4>
-        <p>Calories: {healthyFood?.calories || "N/A"}</p>
-        <p>
-          Protein: {healthyFood?.protein ? `${healthyFood.protein}g` : "N/A"}
-        </p>
-        <p>Carbs: {healthyFood?.carbs ? `${healthyFood.carbs}g` : "N/A"}</p>
-        <p>Fat: {healthyFood?.fat ? `${healthyFood.fat}g` : "N/A"}</p>
+        <p>Calories: {healthyFood?.nutritional_values?.calories || "N/A"}</p>
+        <p>Protein: {healthyFood?.nutritional_values?.protein || "N/A"}g</p>
+        <p>Carbs: {healthyFood?.nutritional_values?.carbohydrate || "N/A"}g</p>
+        <p>Fat: {healthyFood?.nutritional_values?.fat || "N/A"}g</p>
       </div>
 
       <div className="food-box unhealthy">
         <h3>Unhealthy Food</h3>
         <h4>{unhealthyFood?.food_name || "N/A"}</h4>
-        <p>Calories: {unhealthyFood?.calories || "N/A"}</p>
+        <p>Calories: {unhealthyFood?.nutritional_values?.calories || "N/A"}</p>
+        <p>Protein: {unhealthyFood?.nutritional_values?.protein || "N/A"}g</p>
         <p>
-          Protein:{" "}
-          {unhealthyFood?.protein ? `${unhealthyFood.protein}g` : "N/A"}
+          Carbs: {unhealthyFood?.nutritional_values?.carbohydrate || "N/A"}g
         </p>
-        <p>Carbs: {unhealthyFood?.carbs ? `${unhealthyFood.carbs}g` : "N/A"}</p>
-        <p>Fat: {unhealthyFood?.fat ? `${unhealthyFood.fat}g` : "N/A"}</p>
+        <p>Fat: {unhealthyFood?.nutritional_values?.fat || "N/A"}g</p>
       </div>
     </div>
   );
 };
+
+export default ComparisonDisplay;
+
+// ----------------------------------------------------------------------------------
+
+// import React from "react";
+// import "../styles/ComparisonDisplay.css";
+
+// const ComparisonDisplay = ({ foodData }) => {
+//   const healthyFood = foodData?.healthyFood;
+//   const unhealthyFood = foodData?.unhealthyFood;
+
+//   return (
+//     <div className="comparison-container">
+//       <div className="food-box healthy">
+//         <h3>Healthy Food</h3>
+//         <h4>{healthyFood?.food_name || "N/A"}</h4>
+//         <p>Calories: {healthyFood?.calories || "N/A"}</p>
+//         <p>
+//           Protein: {healthyFood?.protein ? `${healthyFood.protein}g` : "N/A"}
+//         </p>
+//         <p>Carbs: {healthyFood?.carbs ? `${healthyFood.carbs}g` : "N/A"}</p>
+//         <p>Fat: {healthyFood?.fat ? `${healthyFood.fat}g` : "N/A"}</p>
+//       </div>
+
+//       <div className="food-box unhealthy">
+//         <h3>Unhealthy Food</h3>
+//         <h4>{unhealthyFood?.food_name || "N/A"}</h4>
+//         <p>Calories: {unhealthyFood?.calories || "N/A"}</p>
+//         <p>
+//           Protein:{" "}
+//           {unhealthyFood?.protein ? `${unhealthyFood.protein}g` : "N/A"}
+//         </p>
+//         <p>Carbs: {unhealthyFood?.carbs ? `${unhealthyFood.carbs}g` : "N/A"}</p>
+//         <p>Fat: {unhealthyFood?.fat ? `${unhealthyFood.fat}g` : "N/A"}</p>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default ComparisonDisplay;
+
+// --------------------------------------------------------------------------------------------------------------------
 
 // const ComparisonDisplay = ({ foodData, isComparing }) => {
 //   // If no foodData and comparison hasn't started, prompt user to begin
@@ -79,5 +117,3 @@ const ComparisonDisplay = ({ foodData }) => {
 //     </div>
 //   );
 // };
-
-export default ComparisonDisplay;
