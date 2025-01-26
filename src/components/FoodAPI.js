@@ -71,7 +71,7 @@ const FoodAPI = () => {
       const accessToken = tokenResponse.data.access_token;
 
       // Step 2: Search for "healthy" and "unhealthy" food items
-      const healthyResponse = await axios.get(API_URL, {
+      const healthySearchResponse = await axios.get(API_URL, {
         params: {
           method: "foods.search",
           search_expression: "salad", // Example healthy food
@@ -82,7 +82,7 @@ const FoodAPI = () => {
         },
       });
 
-      const unhealthyResponse = await axios.get(API_URL, {
+      const unhealthySearchResponse = await axios.get(API_URL, {
         params: {
           method: "foods.search",
           search_expression: "pizza", // Example unhealthy food
@@ -93,9 +93,37 @@ const FoodAPI = () => {
         },
       });
 
+      // Extract food IDs
+      const healthyFoodId = healthySearchResponse.data.foods.food[0].food_id;
+      const unhealthyFoodId =
+        unhealthySearchResponse.data.foods.food[0].food_id;
+
+      // Step 3: Get detailed nutritional information
+      const healthyFoodDetailsResponse = await axios.get(API_URL, {
+        params: {
+          method: "food.get",
+          food_id: healthyFoodId,
+          format: "json",
+        },
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+
+      const unhealthyFoodDetailsResponse = await axios.get(API_URL, {
+        params: {
+          method: "food.get",
+          food_id: unhealthyFoodId,
+          format: "json",
+        },
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+
       setFoodData({
-        healthyFood: healthyResponse.data.foods.food[0],
-        unhealthyFood: unhealthyResponse.data.foods.food[0],
+        healthyFood: healthyFoodDetailsResponse.data.food,
+        unhealthyFood: unhealthyFoodDetailsResponse.data.food,
       });
     } catch (err) {
       setError("Failed to fetch food data. Please try again.");
