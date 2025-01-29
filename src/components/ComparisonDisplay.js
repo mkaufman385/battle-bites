@@ -1,44 +1,13 @@
 import React from "react";
 import "../styles/ComparisonDisplay.css";
 
-// const ComparisonDisplay = ({ foodData }) => {
-//   const healthyFood = foodData?.healthyFood;
-//   const unhealthyFood = foodData?.unhealthyFood;
-
-//   return (
-//     <div className="comparison-container">
-//       <div className="food-box healthy">
-//         <h3>Healthy Food</h3>
-//         <h4>{healthyFood?.food_name || "N/A"}</h4>
-//         <p>Calories: {healthyFood?.nutritional_values?.calories || "N/A"}</p>
-//         <p>Protein: {healthyFood?.nutritional_values?.protein || "N/A"}g</p>
-//         <p>Carbs: {healthyFood?.nutritional_values?.carbohydrate || "N/A"}g</p>
-//         <p>Fat: {healthyFood?.nutritional_values?.fat || "N/A"}g</p>
-//       </div>
-
-//       <div className="food-box unhealthy">
-//         <h3>Unhealthy Food</h3>
-//         <h4>{unhealthyFood?.food_name || "N/A"}</h4>
-//         <p>Calories: {unhealthyFood?.nutritional_values?.calories || "N/A"}</p>
-//         <p>Protein: {unhealthyFood?.nutritional_values?.protein || "N/A"}g</p>
-//         <p>
-//           Carbs: {unhealthyFood?.nutritional_values?.carbohydrate || "N/A"}g
-//         </p>
-//         <p>Fat: {unhealthyFood?.nutritional_values?.fat || "N/A"}g</p>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default ComparisonDisplay;
-
-// ----------------------------------------------------------------------------------
-
 const ComparisonDisplay = ({ foodData }) => {
-  const healthyFood = foodData?.healthyFood;
-  const unhealthyFood = foodData?.unhealthyFood;
+  // Ensure healthyFood and unhealthyFood are either defined or fall back to empty objects
+  const healthyFood = foodData?.healthyFood || {};
+  const unhealthyFood = foodData?.unhealthyFood || {};
 
   const getNutritionalValues = (food) => {
+    // Check if the food object and its servings are valid
     if (!food || !food.servings || !food.servings.serving) return {};
 
     const serving = Array.isArray(food.servings.serving)
@@ -53,6 +22,7 @@ const ComparisonDisplay = ({ foodData }) => {
     };
   };
 
+  // Get nutritional values for both foods
   const healthyNutrition = getNutritionalValues(healthyFood);
   const unhealthyNutrition = getNutritionalValues(unhealthyFood);
 
@@ -60,6 +30,7 @@ const ComparisonDisplay = ({ foodData }) => {
     <div className="comparison-container">
       <div className="food-box healthy">
         <h3>Healthy Food</h3>
+        {/* Fallback to "N/A" if food_name is not available */}
         <h4>{healthyFood?.food_name || "N/A"}</h4>
         <p>Calories: {healthyNutrition.calories}</p>
         <p>Protein: {healthyNutrition.protein}g</p>
@@ -69,6 +40,7 @@ const ComparisonDisplay = ({ foodData }) => {
 
       <div className="food-box unhealthy">
         <h3>Unhealthy Food</h3>
+        {/* Fallback to "N/A" if food_name is not available */}
         <h4>{unhealthyFood?.food_name || "N/A"}</h4>
         <p>Calories: {unhealthyNutrition.calories}</p>
         <p>Protein: {unhealthyNutrition.protein}g</p>

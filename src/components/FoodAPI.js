@@ -122,8 +122,10 @@ const FoodAPI = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const API_KEY = process.env.REACT_APP_FATSECRET_CLIENT_ID;
-  const API_SECRET = process.env.REACT_APP_FATSECRET_CLIENT_SECRET;
+  const API_KEY = process.env.REACT_APP_FATSECRET_API_KEY;
+  const API_SECRET = process.env.REACT_APP_FATSECRET_API_SECRET;
+
+  const TOKEN_URL = "https://oauth.fatsecret.com/connect/token";
   const API_URL = "https://platform.fatsecret.com/rest/server.api";
 
   const fetchFoods = async () => {
@@ -131,8 +133,9 @@ const FoodAPI = () => {
     setError(null);
 
     try {
+      // Step 1: Get OAuth token
       const tokenResponse = await axios.post(
-        "https://oauth.fatsecret.com/connect/token",
+        TOKEN_URL,
         new URLSearchParams({
           grant_type: "client_credentials",
           scope: "basic",
@@ -147,35 +150,45 @@ const FoodAPI = () => {
 
       const accessToken = tokenResponse.data.access_token;
 
-      const healthyResponse = await axios.get(API_URL, {
-        params: {
+      // Step 2: Fetch random healthy and unhealthy foods
+      const healthyFoods = await axios.post(
+        API_URL,
+        new URLSearchParams({
           method: "foods.search",
-          search_expression: "salad",
+          search_expression: "salad", // Example search for healthy foods
           format: "json",
-        },
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
+        }),
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        }
+      );
 
-      const unhealthyResponse = await axios.get(API_URL, {
-        params: {
+      const unhealthyFoods = await axios.post(
+        API_URL,
+        new URLSearchParams({
           method: "foods.search",
-          search_expression: "pizza",
+          search_expression: "pizza", // Example search for unhealthy foods
           format: "json",
-        },
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
+        }),
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        }
+      );
 
-      const healthyFoods = healthyResponse.data.foods.food;
-      const unhealthyFoods = unhealthyResponse.data.foods.food;
+      // Step 3: Randomly select one food from each category
+      const healthyFoodList = healthyFoods.data.foods.food;
+      const unhealthyFoodList = unhealthyFoods.data.foods.food;
 
       const randomHealthyFood =
-        healthyFoods[Math.floor(Math.random() * healthyFoods.length)];
+        healthyFoodList[Math.floor(Math.random() * healthyFoodList.length)];
       const randomUnhealthyFood =
-        unhealthyFoods[Math.floor(Math.random() * unhealthyFoods.length)];
+        unhealthyFoodList[Math.floor(Math.random() * unhealthyFoodList.length)];
 
       setFoodData({
         healthyFood: randomHealthyFood,
