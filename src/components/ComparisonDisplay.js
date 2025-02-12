@@ -32,7 +32,7 @@ const ComparisonDisplay = ({ foodData }) => {
         <h3>Healthy Food</h3>
         {/* Fallback to "N/A" if food_name is not available */}
         <h4>{healthyFood?.food_name || "N/A"}</h4>
-        <p>Calories: {healthyNutrition.calories}</p>
+        <p>Calories: {healthyNutrition.calories}kcal</p>
         <p>Protein: {healthyNutrition.protein}g</p>
         <p>Carbs: {healthyNutrition.carbs}g</p>
         <p>Fat: {healthyNutrition.fat}g</p>
@@ -42,7 +42,7 @@ const ComparisonDisplay = ({ foodData }) => {
         <h3>Unhealthy Food</h3>
         {/* Fallback to "N/A" if food_name is not available */}
         <h4>{unhealthyFood?.food_name || "N/A"}</h4>
-        <p>Calories: {unhealthyNutrition.calories}</p>
+        <p>Calories: {unhealthyNutrition.calories}kcal</p>
         <p>Protein: {unhealthyNutrition.protein}g</p>
         <p>Carbs: {unhealthyNutrition.carbs}g</p>
         <p>Fat: {unhealthyNutrition.fat}g</p>
