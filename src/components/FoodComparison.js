@@ -149,7 +149,8 @@ function FoodComparison() {
   const fetchAccessToken = async () => {
     const clientId = process.env.REACT_APP_FATSECRET_CLIENT_ID;
     const clientSecret = process.env.REACT_APP_FATSECRET_CLIENT_SECRET;
-    const url = "/connect/token";
+    // const url = "/connect/token";
+    const url = "https://oauth.fatsecret.com/connect/token";
 
     try {
       const response = await axios.post(
