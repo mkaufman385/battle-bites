@@ -162,7 +162,10 @@ function FoodComparison() {
         {
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
-            Authorization: `Basic ${btoa(`${clientId}:${clientSecret}`)}`,
+            // Authorization: `Basic ${btoa(`${clientId}:${clientSecret}`)}`,
+            Authorization: `Basic ${window.btoa(
+              `${clientId}:${clientSecret}`
+            )}`,
           },
         }
       );
@@ -173,7 +176,8 @@ function FoodComparison() {
     }
   };
 
-  const apiUrl = "/rest/server.api"; // Using the proxy path for food data request
+  // const apiUrl = "/rest/server.api"; // Using the proxy path for food data request
+  const apiUrl = "https://platform.fatsecret.com/rest/server.api";
 
   const fetchFood = useCallback(async (foodName) => {
     try {
