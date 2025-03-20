@@ -18,13 +18,13 @@ function FoodComparison() {
         new URLSearchParams({
           grant_type: "client_credentials",
           scope: "basic",
-        }),
+        }).toString(),
         {
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
-            Authorization: `Basic ${btoa(
-              unescape(encodeURIComponent(`${clientId}:${clientSecret}`))
-            )}`,
+            Authorization: `Basic ${Buffer.from(
+              `${clientId}:${clientSecret}`
+            ).toString("base64")}`,
           },
         }
       );
