@@ -186,15 +186,15 @@ const FoodAPI = () => {
   const API_KEY = process.env.REACT_APP_FATSECRET_API_KEY;
   const API_SECRET = process.env.REACT_APP_FATSECRET_API_SECRET;
 
-  const TOKEN_URL = "https://oauth.fatsecret.com/connect/token";
-  const API_URL = "https://platform.fatsecret.com/rest/server.api";
+  // const TOKEN_URL = "https://oauth.fatsecret.com/connect/token";
+  // const API_URL = "https://platform.fatsecret.com/rest/server.api";
 
   // Function to fetch food details by name
   const fetchFoodDetails = async (foodName) => {
     try {
       // Step 1: Get OAuth token
       const tokenResponse = await axios.post(
-        TOKEN_URL,
+        "/connect/token",
         new URLSearchParams({
           grant_type: "client_credentials",
           scope: "basic",
@@ -211,7 +211,7 @@ const FoodAPI = () => {
 
       // Step 2: Search for food
       const foodSearchResponse = await axios.post(
-        API_URL,
+        "/rest/server.api",
         new URLSearchParams({
           method: "foods.search",
           search_expression: foodName,
@@ -230,7 +230,7 @@ const FoodAPI = () => {
 
       // Step 3: Fetch detailed food data using the food_id
       const foodDetailsResponse = await axios.post(
-        API_URL,
+        "/rest/server.api",
         new URLSearchParams({
           method: "food.get",
           food_id: randomFood.food_id,
